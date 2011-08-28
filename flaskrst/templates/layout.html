@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset=utf-8>
+  {% block htmlhead %}
+    <title>{% block title %}Home{% endblock %} | {{ SITE_NAME }}</title>
+    <link href="http://fonts.googleapis.com/css?family=Vollkorn&subset=latin" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="/static/style.css" type="text/css">
+  {% endblock %}
+  </head>
+  <body>
+    <div class=container>
+      <div class=header>
+        {{ SITE_NAME }}
+      </div>
+      <div class=navigation>
+        <ul>
+        </ul>
+      </div>
+      <div class=body>
+      {% block body %}{% endblock %}
+      </div>
+      <div class=footer>
+        <p>&copy; Copyright 2011</p>
+      </div>
+    </div>
+  </body>
+</html>
