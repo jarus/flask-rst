@@ -15,3 +15,9 @@ def find_module(name):
     full_name = 'flaskrst.modules.' + name
     __import__(full_name)
     return sys.modules[full_name]
+    
+def load_modules(app):
+    for module, cfg in app.config['MODULES'].items():
+        if not cfg['active']: continue
+        module = find_module(module)
+        module.setup(app, cfg)

@@ -8,13 +8,23 @@
 """
 
 import os
+import yaml
 
 from flaskext.script import Manager
 from flaskrst import app
+from flaskrst.modules import load_modules
 
+def load_yaml_config(app):
+    cfg_path = os.path.join(app.config["SOURCE"], 'config.yml')
+    if os.path.isfile(cfg_path):
+        cfg = open(cfg_path).read()
+        cfg = yaml.load(cfg)
+        app.config.update(cfg)
+    
 def create_app(source):
     app.config["SOURCE"] = source
-    print app.config["SOURCE"]
+    load_yaml_config(app)
+    load_modules(app)
     return app
 
 def main():

@@ -20,3 +20,6 @@ def show(file_name):
     rst_file = os.path.join(current_app.config['SOURCE'], file_name + '.rst')
     rst = rstDocument(rst_file)
     return rst.title + rst.body
+    
+def setup(app, cfg):
+    app.register_blueprint(static_pages)    
