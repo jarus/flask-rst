@@ -1,0 +1,17 @@
+# -*- coding: utf-8 -*-
+"""
+    flask-rst.modules
+    ~~~~~~~~~~~~~~~~~
+
+    Module interface inspired by Armin Ronacher rstblog. 
+
+    :copyright: (c) 2011 by Christoph Heer
+    :license: BSD, see LICENSE for more details.
+"""
+
+import sys
+
+def find_module(name):
+    full_name = 'flaskrst.modules.' + name
+    __import__(full_name)
+    return sys.modules[full_name]

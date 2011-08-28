@@ -16,6 +16,8 @@ setup(
     install_requires=[
         'Flask',
         'Flask-Script',
+        'PyYAML',
+        'docutils'
     ],
     classifiers=[
         'Development Status :: 4 - Beta',
