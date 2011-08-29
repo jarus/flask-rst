@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+{% block title %}Entries tagged “{{ tag }}”{% endblock %}
+
+{% block body %}
+  <h1>Entries <a href="{{ url_for('tags.cloud') }}">tagged</a> “{{ tag }}”</h1>
+  <ul>
+  {%- for post in blog_posts %}
+    <li>
+      <a href="{{ post.link }}">{{ post.title }}</a>, 
+      written on {{ post.pub_date.strftime("%B %d, %Y") }}
+    </li>
+  {%- endfor %}
+  </ul>
+{% endblock %}

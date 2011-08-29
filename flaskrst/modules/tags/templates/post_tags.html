@@ -1,0 +1,9 @@
+{% if tags %}
+  <p class="tags">This entry was tagged
+    {% for tag in tags|sort(case_sensitive=true) %}
+      {%- if not loop.first and not loop.last %}, {% endif -%}
+      {%- if loop.last and not loop.first %} and {% endif %}
+      <a href="{{ url_for('tags.tag', tag=tag) }}">{{ tag }}</a>
+    {%- endfor %}
+  </p>
+{% endif %}

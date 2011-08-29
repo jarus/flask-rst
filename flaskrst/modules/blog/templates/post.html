@@ -6,4 +6,5 @@
     written on {{ post.pub_date.strftime("%b %d, %Y") }}
   </p>
   {{ post.body }}
+  {{ tags(post) }}
 {% endblock %}
