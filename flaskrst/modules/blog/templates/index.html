@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+{% block title %}Blog{% endblock %}
+{% block body %}
+
+  {%- for entry in posts.page_content %}
+  <div class="entry-overview">
+    <div class="date">{{ entry.pub_date.strftime("%b %d, %Y") }}</div>
+    <div class="detail">
+      <h1><a href="{{ entry.link }}">{{ entry.title }}</a></h1>
+      {% if entry.summary %}
+      <div class=summary>{{ entry.summary }}</div>
+      {% endif %}
+    </div>
+  </div>
+  {%- endfor %}  
+
+{% endblock %}

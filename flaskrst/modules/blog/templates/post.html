@@ -1,0 +1,9 @@
+{% extends "layout.html" %}
+{% block title %}{{ post.title }}{% endblock %}
+{% block body %}
+  <h1>{{ post.title }}</h1>
+  <p class="date">
+    written on {{ post.pub_date.strftime("%b %d, %Y") }}
+  </p>
+  {{ post.body }}
+{% endblock %}
