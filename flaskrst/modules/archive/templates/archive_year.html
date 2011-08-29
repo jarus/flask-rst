@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+{% block title %}Blog Archive for {{ year }}{% endblock %}
+
+{% block body %}
+  <h1>Blog <a href="{{ url_for('archive.index') }}">Archive</a> for {{ year }}</h1>
+
+  <ul class="blog-archive">
+    {%- for month, posts in archive.items() %}
+      <li>
+        <a href="{{ url_for('archive.month', year=year, month=month) }}">
+          {{ date(year, month, 1).strftime("%B") }}
+        </a>
+        — {{ posts|count }} {{ 'entry' if posts|count == 1 else 'entries' }}
+    {%- endfor %}
+  </ul>
+{% endblock %}
