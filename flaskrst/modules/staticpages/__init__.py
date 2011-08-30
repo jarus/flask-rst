@@ -16,10 +16,12 @@ from flaskrst.modules import Blueprint
 static_pages = Blueprint('static_pages', __name__, \
                          template_folder='templates')
 
-@static_pages.route('/', defaults={'file_name': 'index'})
-@static_pages.route('/<file_name>')
-def show(file_name):
-    rst_file = os.path.join(current_app.config['SOURCE'], file_name + '.rst')
+@static_pages.route('/', defaults={'file_path': 'index'})
+@static_pages.route('/<path:file_path>')
+def show(file_path):
+    if file_path.endswith('/'):
+        file_path += "index"
+    rst_file = os.path.join(current_app.config['SOURCE'], file_path + '.rst')
     rst = rstDocument(rst_file)
     return render_template("static_page.html", page=rst)
     
