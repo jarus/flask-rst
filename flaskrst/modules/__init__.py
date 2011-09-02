@@ -10,10 +10,6 @@
 """
 
 import sys
-import os
-
-from jinja2 import FileSystemLoader
-from flask import Blueprint, current_app
 
 def find_module(name):
     full_name = 'flaskrst.modules.' + name

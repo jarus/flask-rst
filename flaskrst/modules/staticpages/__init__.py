@@ -9,9 +9,8 @@
 
 import os
 
-from flask import current_app, render_template
+from flask import Blueprint, current_app, render_template
 from flaskrst.parsers import rstDocument
-from flaskrst.modules import Blueprint
 
 static_pages = Blueprint('static_pages', __name__, \
                          template_folder='templates')
