@@ -9,4 +9,4 @@
 
 from flask import Flask
 
-app = Flask("flask-rst")
+app = Flask("flaskrst")

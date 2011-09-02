@@ -25,11 +25,3 @@ def load_modules(app):
         if not cfg['active']: continue
         module = find_module(module)
         module.setup(app, cfg)
-        
-class Blueprint(Blueprint):
-    @property
-    def jinja_loader(self):
-        return FileSystemLoader([
-            os.path.join(os.path.dirname(__file__), "..", "templates"),
-            os.path.join(self.root_path, self.template_folder),
-        ])
