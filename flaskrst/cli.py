@@ -20,6 +20,9 @@ def load_yaml_config(app):
         cfg = open(cfg_path).read()
         cfg = yaml.load(cfg)
         app.config.update(cfg)
+    cfg_static_folder = os.path.join(app.config["SOURCE"], "_static")
+    if os.path.isdir(cfg_static_folder):
+        app.static_folder = cfg_static_folder
     
 def create_app(source):
     app.config["SOURCE"] = source
