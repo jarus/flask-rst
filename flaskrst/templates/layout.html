@@ -3,7 +3,7 @@
   <head>
     <meta charset=utf-8>
   {% block htmlhead %}
-    <title>{% block title %}Home{% endblock %} | {{ SITE_NAME }}</title>
+    <title>{% block title %}Home{% endblock %} | {{ config['SITE_NAME'] }}</title>
     {% for stylesheet in g.stylesheets %}
     <link rel="stylesheet" href="{{ stylesheet }}" type="text/css">
     {% endfor %}
@@ -12,7 +12,7 @@
   <body>
     <div class="container">
       <div class="header">
-        {{ SITE_NAME }}
+        <a href="/">{{ config['SITE_NAME'] }}</a>
       </div>
       <div class="navigation">
         <ul>
@@ -25,7 +25,7 @@
       {% block body %}{% endblock %}
       </div>
       <div class="footer">
-        <p>&copy; Copyright 2011</p>
+        <p>&copy; Copyright 2011 by {{ config['AUTHOR_NAME'] }}</p>
       </div>
     </div>
   </body>
