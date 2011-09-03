@@ -14,6 +14,9 @@
       </div>
       <div class="navigation">
         <ul>
+          {% for link, name in navigation %}
+          <li><a href="{{ link }}">{{ name }}</a></li>
+          {% endfor %}
         </ul>
       </div>
       <div class="body">

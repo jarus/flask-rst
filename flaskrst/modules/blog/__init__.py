@@ -50,4 +50,5 @@ def post(year, month, day, file_name):
     )
     
 def setup(app, cfg):
-    app.register_blueprint(blog)    
+    app.register_blueprint(blog)
+    
