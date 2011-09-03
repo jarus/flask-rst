@@ -22,12 +22,12 @@ def get_archive():
         archive[post.year][post.month].append(post)
     return archive
 
-archive = Blueprint('archive', __name__, template_folder='templates')
+archive = Blueprint('archive', __name__)
 
 @archive.route("/archive")
 def index():
     archive = get_archive()
-    return render_template('archive.html', 
+    return render_template('archive_index.html', 
         archive=archive
     )
 

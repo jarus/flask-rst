@@ -35,23 +35,23 @@ def get_posts_by_tag(name):
 
 def template_tags(doc):
     tags = [tag.lower() for tag in doc.config.get('tags', [])]
-    return Markup(render_template('post_tags.html', tags=tags))
+    return Markup(render_template('tags_inside_post.html', tags=tags))
 
-tags = Blueprint('tags', __name__, template_folder='templates')
+tags = Blueprint('tags', __name__)
 
 @tags.route("/tags")
 def cloud():
     tags = get_tags()
     for tag in tags:
         tags[tag] = 100 + log(tags[tag] or 1) * 20
-    return render_template('cloud.html',
+    return render_template('tags_cloud.html',
         tags=tags
     )
     
 @tags.route("/tags/<tag>")
 def tag(tag):
     blog_posts = get_posts_by_tag(tag)
-    return render_template('tag.html',
+    return render_template('tags_taged_with.html',
         tag=tag,
         blog_posts=blog_posts
     )
