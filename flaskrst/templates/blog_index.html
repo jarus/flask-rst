@@ -2,16 +2,29 @@
 {% block title %}Blog{% endblock %}
 {% block body %}
 
-  {%- for entry in posts.page_content %}
+  {%- for post in posts.page_content %}
   <div class="entry-overview">
-    <div class="date">{{ entry.pub_date.strftime("%b %d, %Y") }}</div>
+    <div class="date">{{ post.pub_date.strftime("%b %d, %Y") }}</div>
     <div class="detail">
-      <h1><a href="{{ entry.link }}">{{ entry.title }}</a></h1>
-      {% if entry.summary %}
-      <div class=summary>{{ entry.summary }}</div>
+      <h1><a href="{{ post.link }}">{{ post.title }}</a></h1>
+      {% if post.config.has_key('summary') %}
+      <div class="summary">{{ post.config['summary'] }}</div>
       {% endif %}
     </div>
   </div>
   {%- endfor %}  
+  <div class="pagination">
+    {% if posts.has_prev -%}
+      <a href="{{ url_for('blog.index', page=posts.page - 1) }}">&laquo; Previous</a>
+    {%- else -%}
+      <span class="disabled">&laquo; Previous</span>
+    {%- endif %}{#
+    #} — <strong>{{ posts.page }}</strong> — {#
+    #}{% if posts.has_next -%}
+      <a href="{{ url_for('blog.index', page=posts.page + 1) }}">Next &raquo;</a>
+    {%- else -%}
+      <span class="disabled">Next &raquo;</span>
+    {%- endif %}
+  </div>
 
 {% endblock %}
