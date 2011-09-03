@@ -18,6 +18,6 @@ def find_module(name):
     
 def load_modules(app):
     for module, cfg in app.config['MODULES'].items():
-        if not cfg['active']: continue
+        if not cfg.get('active', False): continue
         module = find_module(module)
         module.setup(app, cfg)
