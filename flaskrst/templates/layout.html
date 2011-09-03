@@ -4,7 +4,9 @@
     <meta charset=utf-8>
   {% block htmlhead %}
     <title>{% block title %}Home{% endblock %} | {{ SITE_NAME }}</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" type="text/css">
+    {% for stylesheet in g.stylesheets %}
+    <link rel="stylesheet" href="{{ stylesheet }}" type="text/css">
+    {% endfor %}
   {% endblock %}
   </head>
   <body>

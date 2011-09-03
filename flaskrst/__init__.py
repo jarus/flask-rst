@@ -7,7 +7,7 @@
     :license: BSD, see LICENSE for more details.
 """
 
-from flask import Flask, url_for
+from flask import Flask, url_for, g
 
 app = Flask("flaskrst")
 
@@ -26,3 +26,7 @@ def inject_navigation():
             navigation.append((item['url'], item['label']))
 
     return dict(navigation=navigation)
+
+@app.before_request
+def inject_stylesheet():
+    g.stylesheets = [url_for('static', filename='style.css')]
