@@ -15,11 +15,14 @@ app = Flask("flaskrst")
 def inject_navigation():
     navigation = []
     for item in app.config.get('NAVIGATION', []):
-        kwargs = item.copy()
-        del kwargs['route']
-        del kwargs['name']
+        if item.has_key('route') and item.has_key('label'):
+            kwargs = item.copy()
+            del kwargs['route']
+            del kwargs['label']
         
-        link = url_for(item['route'], **kwargs)
-        navigation.append((link, item['name']))
-        
+            link = url_for(item['route'], **kwargs)
+            navigation.append((link, item['label']))
+        elif item.has_key('url') and item.has_key('label'):
+            navigation.append((item['url'], item['label']))
+
     return dict(navigation=navigation)
