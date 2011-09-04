@@ -7,8 +7,6 @@
     :license: BSD, see LICENSE for more details.
 """
 
-from datetime import date
-
 from flask import Blueprint, render_template, abort
 from flaskrst.modules.blog import get_posts
 
@@ -55,5 +53,4 @@ def month(year, month):
     )
 
 def setup(app, cfg):
-    app.jinja_env.globals['date'] = date
     app.register_blueprint(archive)

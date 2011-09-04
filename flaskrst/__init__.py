@@ -8,18 +8,21 @@
 """
 
 import os
+from datetime import date
 
 from jinja2 import FileSystemLoader
 from flask import Flask, url_for, g
 
 class Flask(Flask):
     def create_global_jinja_loader(self):
-        template_path = os.path.join(self.config['SOURCE'], "_templates")
-        builtin_templates = os.path.join(os.path.join(self.root_path,
-                                                      self.template_folder))
+        template_path = os.path.join(self.config.get('SOURCE', ''),
+                                     "_templates")
+        builtin_templates = os.path.join(self.root_path,
+                                         self.template_folder)
         return FileSystemLoader([template_path, builtin_templates])
         
 app = Flask("flaskrst")
+app.jinja_env.globals['date'] = date
 
 @app.context_processor
 def inject_navigation():

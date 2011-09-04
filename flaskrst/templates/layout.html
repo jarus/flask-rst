@@ -25,7 +25,7 @@
       {% block body %}{% endblock %}
       </div>
       <div class="footer">
-        <p>&copy; Copyright 2011 by {{ config['AUTHOR_NAME'] }}</p>
+        <p>&copy; Copyright {{ date.today().strftime("%Y") }} by {{ config['AUTHOR_NAME'] }}</p>
       </div>
     </div>
   </body>
