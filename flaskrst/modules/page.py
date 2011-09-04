@@ -13,7 +13,7 @@ from flaskrst.parsers import rstDocument
 page = Blueprint('page', __name__)
 
 @page.route('/', defaults={'file_path': 'index'})
-@page.route('/<path:file_path>')
+@page.route('/<path:file_path>/')
 def show(file_path):
     if file_path.endswith('/'):
         file_path += "index"

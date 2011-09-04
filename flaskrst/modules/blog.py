@@ -56,14 +56,14 @@ def get_posts():
 blog = Blueprint('blog', __name__)
 
 @blog.route("/", defaults={'page': 1})
-@blog.route("/page/<int:page>")
+@blog.route("/page/<int:page>/")
 def index(page):
     posts = get_posts()
     return render_template('blog_index.html', 
         posts=Pagination(posts, page)
     )
 
-@blog.route("/<int:year>/<int:month>/<int:day>/<file_name>")
+@blog.route("/<int:year>/<int:month>/<int:day>/<file_name>/")
 def post(year, month, day, file_name):
     rst_file = os.path.join(current_app.config['SOURCE'], str(year), \
                             str(month), str(day), file_name + ".rst")

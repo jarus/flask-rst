@@ -39,7 +39,7 @@ def template_tags(doc):
 
 tags = Blueprint('tags', __name__)
 
-@tags.route("/tags")
+@tags.route("/tags/")
 def cloud():
     tags = get_tags()
     for tag in tags:
@@ -48,7 +48,7 @@ def cloud():
         tags=tags
     )
     
-@tags.route("/tags/<tag>")
+@tags.route("/tags/<tag>/")
 def tag(tag):
     blog_posts = get_posts_by_tag(tag)
     return render_template('tags_taged_with.html',

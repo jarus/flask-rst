@@ -22,14 +22,14 @@ def get_archive():
 
 archive = Blueprint('archive', __name__)
 
-@archive.route("/archive")
+@archive.route("/archive/")
 def index():
     archive = get_archive()
     return render_template('archive_index.html', 
         archive=archive
     )
 
-@archive.route("/<int:year>")
+@archive.route("/<int:year>/")
 def year(year):
     archive = get_archive()
     if not archive.has_key(year):
@@ -39,7 +39,7 @@ def year(year):
         year=year
     )
 
-@archive.route("/<int:year>/<int:month>")
+@archive.route("/<int:year>/<int:month>/")
 def month(year, month):
     archive = get_archive()
     if not archive.has_key(year):
