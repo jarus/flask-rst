@@ -7,14 +7,13 @@ setup(
     license='BSD',
     author='Christoph Heer',
     author_email='Christoph.Heer@googlemail.com',
-    description='',
+    description='Create a static website from simple reStructuredText files',
     packages=['flaskrst'],
-    platforms='any',
     entry_points = {
-            'console_scripts': ['flask-rst = flaskrst.cli:main'],
+        'console_scripts': ['flask-rst = flaskrst.cli:main'],
     },
     install_requires=[
-        'Flask',
+        'Flask>=0.7',
         'Flask-Script',
         'PyYAML',
         'docutils'
