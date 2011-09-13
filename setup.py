@@ -1,4 +1,4 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 
 setup(
     name='flask-rst',
@@ -8,7 +8,9 @@ setup(
     author='Christoph Heer',
     author_email='Christoph.Heer@googlemail.com',
     description='Create a static website from simple reStructuredText files',
-    packages=['flaskrst'],
+    packages=find_packages(),
+    include_package_data=True,
+    zip_safe=False,
     entry_points = {
         'console_scripts': ['flask-rst = flaskrst.cli:main'],
     },

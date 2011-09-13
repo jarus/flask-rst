@@ -1,0 +1,2 @@
+recursive-include flaskrst/templates *
+recursive-include flaskrst/static *
