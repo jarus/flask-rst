@@ -38,7 +38,13 @@ manager.add_option("-s", "--source", dest="source", required=False, \
 @manager.option('-b', '--build', dest="build_destination", required=False)
 def build(build_destination=None):
     """Create a static version of the site with Frozen-Flask"""
-    from flaskext.frozen import Freezer
+    try:
+        from flaskext.frozen import Freezer
+    except ImportError:
+        import sys
+        sys.exit("To create a static version of the site you need the "
+                 "Frozen-Flask package")
+    
     if build_destination is not None:
         app.config['FREEZER_DESTINATION'] = build_destination
     else:

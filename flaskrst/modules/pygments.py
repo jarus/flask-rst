@@ -6,15 +6,20 @@
     :copyright: (c) 2011 by Christoph Heer.
     :license: BSD, see LICENSE for more details.
 """
+
 from __future__ import absolute_import
 from docutils import nodes
 from docutils.parsers.rst import directives, Directive
 
-from pygments import highlight
-from pygments.lexers import get_lexer_by_name, TextLexer
-from pygments.formatters import HtmlFormatter
-
 from flask import Response, url_for, g
+
+try:
+    from pygments import highlight
+    from pygments.lexers import get_lexer_by_name, TextLexer
+    from pygments.formatters import HtmlFormatter
+except ImportError:
+    import sys
+    sys.exit("To use pygments in flask-rst you must install pygments")
 
 formatter = HtmlFormatter()
 
