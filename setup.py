@@ -18,8 +18,7 @@ setup(
         'Flask>=0.7',
         'Flask-Script',
         'PyYAML',
-        'docutils',
-        'pygments'
+        'docutils'
     ],
     classifiers=[
         'Development Status :: 4 - Beta',
