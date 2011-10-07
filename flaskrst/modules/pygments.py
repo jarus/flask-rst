@@ -11,7 +11,7 @@ from __future__ import absolute_import
 from docutils import nodes
 from docutils.parsers.rst import directives, Directive
 
-from flask import Response, url_for, g
+from flask import Response, url_for
 
 try:
     from pygments import highlight
@@ -50,4 +50,4 @@ def setup(app, cfg):
     
     @app.before_request
     def inject_pygments_css():
-        g.stylesheets.append(url_for('pygments_css'))
+        app.config['STYLESHEETS'].append(url_for('pygments_css'))
