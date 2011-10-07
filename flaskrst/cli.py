@@ -8,27 +8,12 @@
 """
 
 import os
-import yaml
 
 from flaskext.script import Manager
-from flaskrst import app
-from flaskrst.modules import load_modules
+from flaskrst import app, set_source
 
-
-def load_yaml_config(app):
-    cfg_path = os.path.join(app.config["SOURCE"], 'config.yml')
-    if os.path.isfile(cfg_path):
-        cfg = open(cfg_path).read()
-        cfg = yaml.load(cfg)
-        app.config.update(cfg)
-    cfg_static_folder = os.path.join(app.config["SOURCE"], "_static")
-    if os.path.isdir(cfg_static_folder):
-        app.static_folder = cfg_static_folder
-    
 def create_app(source):
-    app.config["SOURCE"] = source
-    load_yaml_config(app)
-    load_modules(app)
+    set_source(app, source)
     return app
 
 manager = Manager(create_app)
@@ -44,12 +29,13 @@ def build(build_destination=None):
         import sys
         sys.exit("To create a static version of the site you need the "
                  "Frozen-Flask package")
-    
+
     if build_destination is not None:
         app.config['FREEZER_DESTINATION'] = build_destination
     else:
-        app.config['FREEZER_DESTINATION'] = os.path.join(app.config["SOURCE"],
-                                                         "_build")
+        app.config['FREEZER_DESTINATION'] = os.path.join(
+        app.config["SOURCE"], "_build")
+
     freezer = Freezer(app)
     freezer.freeze()
 
