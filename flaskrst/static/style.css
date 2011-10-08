@@ -70,7 +70,6 @@ div.entry-overview div.summary p    { margin: 0; padding: 0; }
 div.entry-overview div.detail       { margin-left: 140px; }
 div.entry-overview div.date         { float: left; color: #888;
                                       text-align: right; font-style: italic; }
-div.entry-overview h1:after         { content: " ~"; }
 
 /* other alignment things */
 img.align-center        { margin: 15px auto; display: block; }

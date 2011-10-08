@@ -5,6 +5,7 @@ MODULES = {
     'page': {
         },
     'blog': {
+        'body_as_summary_fallback': True
         },
     'archive': {
         },
