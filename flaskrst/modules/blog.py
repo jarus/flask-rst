@@ -11,7 +11,7 @@ import os
 import re
 from datetime import date
 
-from flask import Blueprint, render_template, current_app, url_for
+from flask import Blueprint, render_template, current_app, url_for, abort
 
 from flaskrst.helpers import Pagination
 from flaskrst.parsers import rstDocument
@@ -70,10 +70,27 @@ def index(page):
 def post(year, month, day, file_name):
     rst_file = os.path.join(current_app.config['SOURCE'], str(year), \
                             str(month), str(day), file_name + ".rst")
-    post = BlogPost(rst_file)
+    posts = get_posts()
+    post_index = None
+    for post in posts:
+        if post.file_path == rst_file:
+            post_index = posts.index(post)
+            break
+    else:
+        abort(404)
+
+    prev_post = None
+    next_post = None
+    if post_index > 0:
+        prev_post = posts[post_index-1]
+    if post_index < len(posts)-1:
+        next_post = posts[post_index+1]
+
     return render_template('blog_post.html',
-        post=post
-    )
+                           post=post,
+                           prev=prev_post,
+                           next=next_post
+                           )
     
 def setup(app, cfg):
     app.register_blueprint(blog)
