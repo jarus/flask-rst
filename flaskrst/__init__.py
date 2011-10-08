@@ -33,7 +33,8 @@ def set_source(app, source_path=os.getcwd()):
     source_static_folder = os.path.join(source_path, "_static")
     if os.path.isdir(source_static_folder):
         app.static_folder = source_static_folder
-    app.config.from_pyfile(os.path.join(app.config['SOURCE'], 'config.py'))
+    app.config.from_pyfile(os.path.join(app.config['SOURCE'], 'config.py'),
+                           silent=True)
     load_modules(app)
 
 set_source(app)
