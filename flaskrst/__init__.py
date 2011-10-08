@@ -11,7 +11,7 @@ import os
 from datetime import date
 
 from jinja2 import FileSystemLoader
-from flask import Flask, url_for
+from flask import Flask, url_for, render_template
 
 from flaskrst.modules import load_modules
 
@@ -33,7 +33,8 @@ def set_source(app, source_path=os.getcwd()):
     source_static_folder = os.path.join(source_path, "_static")
     if os.path.isdir(source_static_folder):
         app.static_folder = source_static_folder
-    app.config.from_pyfile(os.path.join(app.config['SOURCE'], 'config.py'))
+    app.config.from_pyfile(os.path.join(app.config['SOURCE'], 'config.py'),
+                           silent=True)
     load_modules(app)
 
 set_source(app)
@@ -59,3 +60,7 @@ def inject_stylesheet():
     url = url_for('static', filename='style.css')
     if app.config['STYLESHEETS'].count(url) < 1:
         app.config['STYLESHEETS'].append(url)
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
