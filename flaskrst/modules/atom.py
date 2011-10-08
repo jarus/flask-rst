@@ -20,8 +20,15 @@ def atom_feed():
                     feed_url=request.url, url=request.host_url,
                     subtitle=current_app.config.get('SITE_SUBTITLE', None))
     for post in get_posts():
-        entry = FeedEntry(post.title, url=post.external_url,
-                          updated=post.pub_date)
+        entry = FeedEntry(post.title, 
+                          url=post.external_url,
+                          updated=post.pub_date, 
+                          content=post.body,
+                          summary=post.config.get('summary', None), 
+                          author={
+                            'name': current_app.config.get('AUTHOR_NAME'),
+                            'email': current_app.config.get('AUTHOR_EMAIL')
+                          })
         feed.add(entry)
     return feed.to_string(), 200, {}, "application/atom+xml"
     
