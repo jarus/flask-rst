@@ -17,7 +17,6 @@ setup(
     install_requires=[
         'Flask>=0.7',
         'Flask-Script',
-        'PyYAML',
         'docutils',
         'Flask-Testing'
     ],
