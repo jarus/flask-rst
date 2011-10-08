@@ -29,8 +29,11 @@ class BlogPost(rstDocument):
         self.day = int(match.group(3))
         self.pub_date = date(self.year, self.month, self.day)
         
-        self.link = url_for('blog.post', year=self.year, month=self.month, \
+        self.url = url_for('blog.post', year=self.year, month=self.month, \
                             day=self.day, file_name=self.file_name)
+        self.external_url = url_for('blog.post', year=self.year,
+                                    month=self.month, day=self.day,
+                                    file_name=self.file_name, _external=True)
     
     def __repr__(self):
         return "<BlogPost %s %s>" % (self.file_name, \
