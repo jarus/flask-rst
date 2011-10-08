@@ -3,19 +3,14 @@ AUTHOR_NAME = "Me"
 
 MODULES = {
     'page': {
-        'active': True
         },
     'blog': {
-        'active': True
         },
     'archive': {
-        'active': True
         },
     'tags': {
-        'active': True
         },
     'pygments': {
-        'active': True,
         'style': 'tango'
         }
     }
