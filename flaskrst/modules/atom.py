@@ -14,7 +14,6 @@ atom = Blueprint('atom', __name__)
 
 @atom.route("/atom.xml")
 def atom_feed():
-    print dir(atom)
     feed = AtomFeed(current_app.config.get('SITE_NAME', "My Site"), 
                     feed_url=request.url, url=request.host_url,
                     subtitle=current_app.config.get('SITE_SUBTITLE', None))
