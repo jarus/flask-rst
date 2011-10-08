@@ -7,7 +7,7 @@ setup(
     license='BSD',
     author='Christoph Heer',
     author_email='Christoph.Heer@googlemail.com',
-    description='Create a static website from simple reStructuredText files',
+    description='Create a (static) website from simple reStructuredText files',
     packages=find_packages(),
     include_package_data=True,
     zip_safe=False,
@@ -18,7 +18,8 @@ setup(
         'Flask>=0.7',
         'Flask-Script',
         'PyYAML',
-        'docutils'
+        'docutils',
+        'Flask-Testing'
     ],
     classifiers=[
         'Development Status :: 4 - Beta',
