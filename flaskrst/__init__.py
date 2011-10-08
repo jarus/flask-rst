@@ -25,6 +25,7 @@ class Flask(Flask):
         
 app = Flask("flaskrst")
 app.config['STYLESHEETS'] = []
+app.config['FEEDS'] = []
 app.jinja_env.globals['date'] = date
 
 def set_source(app, source_path=os.getcwd()):
@@ -55,4 +56,6 @@ def inject_navigation():
 
 @app.before_request
 def inject_stylesheet():
-    app.config['STYLESHEETS'].append(url_for('static', filename='style.css'))
+    url = url_for('static', filename='style.css')
+    if app.config['STYLESHEETS'].count(url) < 1:
+        app.config['STYLESHEETS'].append(url)

@@ -7,6 +7,11 @@
     {% for stylesheet in config['STYLESHEETS'] %}
     <link rel="stylesheet" href="{{ stylesheet }}" type="text/css">
     {% endfor %}
+
+    {% for href, type, title in config['FEEDS'] %}
+    <link href="{{ href }}" type="{{ type }}" rel="alternate" title="{{ title }}" />
+    {% endfor %}
+
   {% endblock %}
   </head>
   <body>
