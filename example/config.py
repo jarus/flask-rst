@@ -10,6 +10,8 @@ MODULES = {
         },
     'tags': {
         },
+    'atom': {
+        },
     'pygments': {
         'style': 'tango'
         }
