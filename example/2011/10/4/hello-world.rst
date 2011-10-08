@@ -1,10 +1,9 @@
-public: true
-tags: [hello, world]
-summary: |
-  A very simple blog post
-
 Hello World
 ===========
+
+:public: True
+:tags: ["hello", "world"]
+:summary: "A very simple blog post"
 
 This is my first blog post with `flask-rst <https://github.com/jarus/flask-rst/>`_.
 
