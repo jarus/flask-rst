@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 setup(
     name='flask-rst',
     version='0.1',
-    url='http://bitbucket.org/Jarus/flask-rstblog',
+    url='http://github.com/jarus/flask-rst/',
     license='BSD',
     author='Christoph Heer',
     author_email='Christoph.Heer@googlemail.com',
