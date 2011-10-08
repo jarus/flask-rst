@@ -14,7 +14,7 @@ from flaskrst.modules.blog import get_posts
 
 atom = Blueprint('atom', __name__)
 
-@atom.route("/atom.xml")
+@atom.route("/feed.atom")
 def atom_feed():
     feed = AtomFeed(current_app.config.get('SITE_NAME', "My Site"), 
                     feed_url=request.url, url=request.host_url,
