@@ -11,7 +11,7 @@ import os
 from datetime import date
 
 from jinja2 import FileSystemLoader
-from flask import Flask, url_for
+from flask import Flask, url_for, render_template
 
 from flaskrst.modules import load_modules
 
@@ -59,3 +59,7 @@ def inject_stylesheet():
     url = url_for('static', filename='style.css')
     if app.config['STYLESHEETS'].count(url) < 1:
         app.config['STYLESHEETS'].append(url)
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
