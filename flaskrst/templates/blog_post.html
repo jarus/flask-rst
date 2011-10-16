@@ -8,8 +8,8 @@
   {{ post.body }}
   {{ tags(post) }}
 
-<p>
+<div class="pagination">
   {% if prev %}<a href="{{ prev.url }}">&lt;&lt; {{ prev.title|truncate(20,end='...') }}</a>{% endif %}
-  {% if next %}<a href="{{ next.url }}">{{ next.title|truncate(20,end='...') }} &gt;&gt;</a>{% endif %}
-</p>
+  {% if next %}{% if prev %}— {% endif %}<a href="{{ next.url }}">{{ next.title|truncate(20,end='...') }} &gt;&gt;</a>{% endif %}
+</div>
 {% endblock %}
