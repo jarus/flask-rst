@@ -2,7 +2,7 @@
 {% block title %}Blog{% endblock %}
 {% block body %}
 
-  {%- for post in posts.page_content %}
+  {%- for post in posts.page_content|sort(attribute='pub_date',reverse=True) %}
   <div class="entry-overview">
     <div class="date">{{ post.pub_date.strftime("%b %d, %Y") }}</div>
     <div class="detail">
