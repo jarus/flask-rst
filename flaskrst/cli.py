@@ -61,7 +61,8 @@ def _read_date():
 
 @manager.command
 def new():
-    """Create new blog post (including directories) and run favourite editor."""
+    """Create new blog post (including directories)
+       and run $EDITOR (fallback to vi)."""
     # read date
     dt = _read_date()
     # make directorie(s)
@@ -72,8 +73,8 @@ def new():
         pass
     # chdir to that directory
     os.chdir(path)
-    # run emacs
-    os.system('emacs .')
+    # run $EDITOR, with default to vi (should exist on every unix)
+    os.system(os.getenv('EDITOR', 'vi'))
     
 def main():
     manager.run()
