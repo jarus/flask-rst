@@ -8,6 +8,7 @@
 """
 
 import os
+import datetime
 
 from flaskext.script import Manager
 from flaskrst import app, set_source
@@ -39,5 +40,41 @@ def build(build_destination=None):
     freezer = Freezer(app)
     freezer.freeze()
 
+
+def _read_date():
+    """ read date from input; default to today """
+    # show date
+    dt = datetime.date.today()
+    while 1:
+        print("Date [%s]: " % dt),
+        dts = raw_input()
+        if len(dts) == 0:
+            dt = dt
+            break
+        else:
+            try:
+                dt = datetime.date(*tuple(map(lambda x:int(x), dts.split('-'))))
+                break
+            except ValueError:
+                pass
+    return dt
+
+@manager.command
+def new():
+    """Create new blog post (including directories)
+       and run $EDITOR (fallback to vi)."""
+    # read date
+    dt = _read_date()
+    # make directorie(s)
+    path = str(dt).replace('-','/')
+    try: 
+        os.makedirs(path)
+    except OSError:
+        pass
+    # chdir to that directory
+    os.chdir(path)
+    # run $EDITOR, with default to vi (should exist on every unix)
+    os.system(os.getenv('EDITOR', 'vi'))
+    
 def main():
     manager.run()
