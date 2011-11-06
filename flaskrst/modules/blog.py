@@ -69,7 +69,7 @@ def index(page):
 @blog.route("/<int:year>/<int:month>/<int:day>/<file_name>/")
 def post(year, month, day, file_name):
     rst_file = os.path.join(current_app.config['SOURCE'], str(year), \
-                            str(month), str(day), file_name + ".rst")
+                            "%02d" % month, "%02d" % day, file_name + ".rst")
     posts = get_posts()
     post_index = None
     for post in posts:

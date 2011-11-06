@@ -56,8 +56,7 @@ def _read_date():
                 break
             except ValueError:
                 pass
-    # remove leading 0s
-    return dt.strftime('%Y-%m-%d').replace('-0','-')
+    return dt.strftime('%Y-%m-%d')
 
 @manager.command
 def new():
