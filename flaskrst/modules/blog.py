@@ -16,7 +16,7 @@ from flask import Blueprint, render_template, current_app, url_for, abort
 from flaskrst.helpers import Pagination
 from flaskrst.parsers import rstDocument
 
-blog_posts_path_re = re.compile(r".*?/(\d{4})/(\d{1,2})/(\d{1,2})/([A-Za-z0-9-]+).rst$")
+blog_posts_path_re = re.compile(r".*?/(\d{4})/(\d{1,2})/(\d{1,2})/([A-Za-z0-9-\_\.]+).rst$")
 
 class BlogPost(rstDocument):
     
@@ -29,8 +29,8 @@ class BlogPost(rstDocument):
         self.day = int(match.group(3))
         self.pub_date = date(self.year, self.month, self.day)
         
-        self.url = url_for('blog.post', year=self.year, month=self.month, \
-                            day=self.day, file_name=self.file_name)
+        self.url = url_for('blog.post', year=self.year, month=self.month,
+                           day=self.day, file_name=self.file_name)
         self.external_url = url_for('blog.post', year=self.year,
                                     month=self.month, day=self.day,
                                     file_name=self.file_name, _external=True)
