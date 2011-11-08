@@ -21,7 +21,7 @@ config_parser_re = re.compile(r"^:(\w+): ?(.*?)$", re.M)
 class rstDocument(object):
     def __init__(self, file_path):
         self.file_path = file_path
-        self.file_name = os.path.basename(self.file_path).split(".")[0]
+        self.file_name = ".".join(os.path.basename(self.file_path).split(".")[:-1])
         self._config = None
         self._rst = None
         if not os.path.isfile(self.file_path):

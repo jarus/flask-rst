@@ -49,7 +49,6 @@ def _read_date():
         print("Date [%s]: " % dt),
         dts = raw_input()
         if len(dts) == 0:
-            dt = dt
             break
         else:
             try:
@@ -57,7 +56,7 @@ def _read_date():
                 break
             except ValueError:
                 pass
-    return dt
+    return dt.strftime('%Y-%m-%d')
 
 @manager.command
 def new():
@@ -66,7 +65,7 @@ def new():
     # read date
     dt = _read_date()
     # make directorie(s)
-    path = str(dt).replace('-','/')
+    path = dt.replace('-','/')
     try: 
         os.makedirs(path)
     except OSError:
