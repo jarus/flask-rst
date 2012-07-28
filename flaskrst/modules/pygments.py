@@ -50,5 +50,5 @@ def setup(app, cfg):
     
     @app.before_request
     def inject_pygments_css():
-        if app.config['STYLESHEETS'].count(url_for('pygments_css')) < 1:
+        if url_for('pygments_css') not in app.config['STYLESHEETS']:
             app.config['STYLESHEETS'].append(url_for('pygments_css'))
