@@ -13,7 +13,7 @@ from datetime import date
 from jinja2 import FileSystemLoader
 from flask import Flask, render_template
 
-from flaskrst.modules import manager, FlaskRSTModuleManager
+from flaskrst.modules import manager
 from flaskrst.templating import inject_navigation, inject_default_stylesheet
 
 class Flask(Flask):
