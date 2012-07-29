@@ -7,7 +7,7 @@
     :license: BSD, see LICENSE for more details.
 """
 
-from flask import Blueprint, request, current_app, url_for
+from flask import Blueprint, request, current_app, url_for, make_response
 from werkzeug.contrib.atom import AtomFeed, FeedEntry
 
 from flaskrst.modules.blog import get_posts
@@ -30,7 +30,9 @@ def atom_feed():
                             'email': current_app.config.get('AUTHOR_EMAIL')
                           })
         feed.add(entry)
-    return feed.to_string(), 200, {}, "application/atom+xml"
+    resp = make_response(feed.to_string())
+    resp.mimetype = "application/atom+xml"
+    return resp
     
 def setup(app, cfg):
     app.register_blueprint(atom)
