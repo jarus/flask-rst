@@ -10,7 +10,9 @@
 import os
 import datetime
 
-from flaskext.script import Manager
+from flask import current_app
+
+from flaskext.script import Manager, prompt
 from flaskrst import create_app
 
 manager = Manager(create_app)
@@ -28,31 +30,26 @@ def build(build_destination=None):
                  "Frozen-Flask package")
 
     if build_destination is not None:
-        app.config['FREEZER_DESTINATION'] = build_destination
+        current_app.config['FREEZER_DESTINATION'] = build_destination
     else:
-        app.config['FREEZER_DESTINATION'] = os.path.join(
-        app.config["SOURCE"], "_build")
+        current_app.config['FREEZER_DESTINATION'] = os.path.join(
+        current_app.config["SOURCE"], "_build")
 
-    freezer = Freezer(app)
+    freezer = Freezer(current_app)
     freezer.freeze()
 
 
 def _read_date():
     """ read date from input; default to today """
     # show date
-    dt = datetime.date.today()
     while 1:
-        print("Date [%s]: " % dt),
-        dts = raw_input()
-        if len(dts) == 0:
+        dts = prompt("Date", default=str(datetime.date.today()))
+        try:
+            datetime.datetime.strptime(dts, "%Y-%m-%d")
             break
-        else:
-            try:
-                dt = datetime.date(*tuple(map(lambda x:int(x), dts.split('-'))))
-                break
-            except ValueError:
-                pass
-    return dt.strftime('%Y-%m-%d')
+        except ValueError:
+            continue
+    return dts
 
 @manager.command
 def new():
