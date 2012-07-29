@@ -16,6 +16,7 @@ from flask import Blueprint, render_template, current_app, url_for, abort
 from flaskrst.helpers import Pagination
 from flaskrst.parsers import rstDocument
 
+blog_config = {}
 blog_posts_path_re = re.compile(r".*?/(\d{4})/(\d{1,2})/(\d{1,2})/([A-Za-z0-9-\_\.]+).rst$")
 
 class BlogPost(rstDocument):
@@ -34,6 +35,15 @@ class BlogPost(rstDocument):
         self.external_url = url_for('blog.post', year=self.year,
                                     month=self.month, day=self.day,
                                     file_name=self.file_name, _external=True)
+    
+    @property
+    def summary(self):
+        if 'summary' in self.config:
+            return self.config['summary']
+        elif blog_config.get('body_as_summary_fallback'):
+            return self.body
+        else:
+            return None
     
     def __repr__(self):
         return "<BlogPost %s %s>" % (self.file_name, \
@@ -93,5 +103,7 @@ def post(year, month, day, file_name):
                            )
     
 def setup(app, cfg):
+    global blog_config
+    blog_config = cfg
     app.register_blueprint(blog)
     

@@ -7,12 +7,8 @@
     <div class="date">{{ post.pub_date.strftime("%b %d, %Y") }}</div>
     <div class="detail">
       <h1><a href="{{ post.url }}">{{ post.title }}</a></h1>
-      {% if post.config.has_key('summary') %}~ 
-      <div class="summary">{{ post.config['summary'] }}</div>
-      {% else %}
-      {% if config['MODULES']['blog'].get('body_as_summary_fallback') %}
-        <div class="body">{{ post.body }}</div>
-      {% endif %}
+      {% if post.summary %}~ 
+      <div class="summary">{{ post.summary }}</div>
       {% endif %}
     </div>
   </div>
