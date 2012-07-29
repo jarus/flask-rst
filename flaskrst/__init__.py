@@ -24,8 +24,8 @@ class Flask(Flask):
         return FileSystemLoader([template_path, builtin_templates])
         
 app = Flask("flaskrst")
-app.config['STYLESHEETS'] = []
-app.config['FEEDS'] = []
+app.config.setdefault('STYLESHEETS', [])
+app.config.setdefault('FEEDS', [])
 app.jinja_env.globals['date'] = date
 
 def set_source(app, source_path=os.getcwd()):
@@ -57,8 +57,8 @@ def inject_navigation():
 
 @app.before_request
 def inject_stylesheet():
-    url = url_for('static', filename='style.css')
-    if app.config['STYLESHEETS'].count(url) < 1:
+    if len(app.config['STYLESHEETS']) == 0:
+        url = url_for('static', filename='style.css')
         app.config['STYLESHEETS'].append(url)
 
 @app.errorhandler(404)
