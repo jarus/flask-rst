@@ -27,4 +27,7 @@ Listing is very clean:
         - international noses
     
 
+There is also a interface to GitHub:
+
+.. github-repo:: jarus/flask-rst
 

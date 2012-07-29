@@ -2,21 +2,19 @@ SITE_NAME = "My Blog"
 AUTHOR_NAME = "Me"
 
 MODULES = {
-    'page': {
-        },
-    'blog': {
+    'flaskrst.modules.page': {},
+    'flaskrst.modules.blog': {
         'body_as_summary_fallback': True
-        },
-    'archive': {
-        },
-    'tags': {
-        },
-    'atom': {
-        },
-    'pygments': {
+    },
+    'flaskrst.modules.archive': {},
+    'flaskrst.modules.tags': {},
+    'flaskrst.modules.atom': {},
+    'flaskrst.modules.pygments': {
         'style': 'tango'
-        }
-    }
+    },
+    'flaskrst.modules.github': {},
+}
+
 NAVIGATION = [
     {
         'route': 'blog.index',
@@ -31,4 +29,8 @@ NAVIGATION = [
         'label': 'about',
         'file_path': 'about'
         }
+]
+
+STYLESHEETS = [
+    '/static/style.css'
 ]
