@@ -13,7 +13,7 @@ from datetime import date
 from jinja2 import FileSystemLoader
 from flask import Flask, render_template
 
-from flaskrst.modules import load_modules
+from flaskrst.modules import manager, FlaskRSTModuleManager
 from flaskrst.templating import inject_navigation, inject_default_stylesheet
 
 class Flask(Flask):
@@ -27,6 +27,7 @@ def create_app(source=None, config=None):
     app = Flask("flaskrst")
     
     # Set default config values
+    app.config.setdefault('MODULES', {})
     app.config.setdefault('STYLESHEETS', [])
     app.config.setdefault('FEEDS', [])
     
@@ -66,7 +67,8 @@ def create_app(source=None, config=None):
             app.static_folder = source_static_folder
     
     # Load flask-rst modules
-    load_modules(app)
+    manager.init_app(app)
+    manager.load_from_config()
 
     # Add some jinja globals and context processors
     app.jinja_env.globals['date'] = date
