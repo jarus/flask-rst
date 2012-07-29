@@ -45,7 +45,7 @@ def setup(app, cfg):
     directives.register_directive('sourcecode', Pygments)
     directives.register_directive('code-block', Pygments)
     
-    @app.route(cfg.get('css_file_route', "/pygments.css"))
+    @app.route(cfg.get('css_file_route', "/static/pygments.css"))
     def pygments_css():
         etag = sha1(str(formatter.style)).hexdigest()
         if request.headers.get('If-None-Match') == etag:
