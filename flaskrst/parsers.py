@@ -41,8 +41,12 @@ class rstDocument(object):
     @property
     def rst(self):
         if not isinstance(self._rst, dict):
+            settings = {
+                'initial_header_level': 2
+            }
             self._rst = publish_parts(source=self.raw, \
-                                      writer_name='html4css1')
+                                      writer_name='html4css1',
+                                      settings_overrides=settings)
         return self._rst
 
     @property
