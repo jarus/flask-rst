@@ -34,3 +34,7 @@ class Pagination(object):
         start = self.page * self.per_page - self.per_page
         stop = start + self.per_page
         return self.items[start:stop]
+    
+    @property
+    def need_pagination(self):
+        return self.total_count > self.per_page
