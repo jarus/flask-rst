@@ -14,7 +14,7 @@ from jinja2 import FileSystemLoader
 from flask import Flask, render_template
 
 from flaskrst.modules import manager
-from flaskrst.templating import inject_navigation, inject_default_stylesheet
+from flaskrst.templating import inject_navigation
 
 class Flask(Flask):
     def create_global_jinja_loader(self):
@@ -73,10 +73,6 @@ def create_app(source=None, config=None):
     # Add some jinja globals and context processors
     app.jinja_env.globals['date'] = date
     app.context_processor(inject_navigation)
-    
-    # Inject the default stylesheet 'style.css' is there no other stylesheet 
-    # in app config
-    inject_default_stylesheet(app)
     
     @app.errorhandler(404)
     def page_not_found(error):

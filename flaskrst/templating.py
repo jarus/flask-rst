@@ -23,16 +23,3 @@ def inject_navigation():
             navigation.append((item['url'], item['label']))
 
     return dict(navigation=navigation)
-
-def _inject_default_stylesheet():
-    if len(current_app.config['STYLESHEETS']) == 0:
-        url = url_for('static', filename='style.css')
-        current_app.config['STYLESHEETS'].append(url)
-
-def inject_default_stylesheet(app):
-    if hasattr(app, 'before_first_request'):
-        app.before_first_request(_inject_default_stylesheet)
-    else:
-        app.before_request(_inject_default_stylesheet)
-    
-    
