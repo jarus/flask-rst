@@ -22,7 +22,43 @@ except ImportError:
     import sys
     sys.exit("To use github in flask-rst you must install requests")
 
-_github_repo_cache = {}
+class GitHubAPIException(Exception):
+    
+    message = "unknow"
+    
+    def __init__(self, message):
+        self.message = message
+
+class GitHubRepoCache():
+    
+    _cache = {}
+    
+    def __getitem__(self, repo):
+        if repo not in self._cache \
+        or self._cache[repo]['expire'] < time.time():
+            headers = {}
+            if repo in self._cache:
+                headers['If-None-Match'] = self._cache[repo]['etag']
+            
+            res = requests.get(
+                'https://api.github.com/repos/%s' % repo, 
+                headers=headers
+            )
+            
+            if res.status_code == 304:
+                self._cache[repo]['expire'] = time.time() + 600
+            elif res.status_code == 200:
+                self._cache[repo] = {}
+                self._cache[repo]['json'] = res.json
+                self._cache[repo]['expire'] = time.time() + 600
+                self._cache[repo]['etag'] = res.headers.get('ETag')
+            else:
+                raise GitHubAPIException(res.json['message'])
+
+        return self._cache[repo]['json']
+            
+    
+github_repo_cache = GitHubRepoCache()
 
 class GitHubRepoDirective(Directive):
     required_arguments = 1
@@ -32,36 +68,15 @@ class GitHubRepoDirective(Directive):
     
     def run(self):
         repo = self.arguments[0]
-
-        if repo in _github_repo_cache \
-        and _github_repo_cache[repo]['expire'] > time.time():
-            html = _github_repo_cache[repo]['html']
-        else:
-            headers = {}
-            if repo in _github_repo_cache:
-                headers['If-None-Match'] = _github_repo_cache[repo]['etag']
-            
-            res = requests.get(
-                'https://api.github.com/repos/%s' % repo, 
-                headers=headers
-            ) 
-            
-            if res.status_code == 304:
-                html = _github_repo_cache[repo]['html']
-                
-                _github_repo_cache[repo]['expire'] = time.time() + 600
-            elif res.status_code == 200:
-                html = render_template('github_repo.html', repo=res.json)
-                
-                _github_repo_cache[repo] = {}
-                _github_repo_cache[repo]['html'] = html
-                _github_repo_cache[repo]['expire'] = time.time() + 600
-                _github_repo_cache[repo]['etag'] = res.headers.get('ETag')
-            else:
-                raise self.error("GitHub API error: %s" % res.json['message'])
-                            
+        
+        try:
+            repo_json = github_repo_cache[repo]
+        except GitHubAPIException, e:
+            raise self.error("GitHub API error: %s" % e.message)
+        
+        html = render_template('github_repo.html', repo=repo_json)
         return [nodes.raw('', html, format='html')]
-    
+
 def setup(app, cfg):
     from docutils.parsers.rst import directives
     directives.register_directive('github-repo', GitHubRepoDirective)
