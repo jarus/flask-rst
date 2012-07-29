@@ -11,56 +11,75 @@ import os
 from datetime import date
 
 from jinja2 import FileSystemLoader
-from flask import Flask, url_for, render_template
+from flask import Flask, render_template
 
 from flaskrst.modules import load_modules
+from flaskrst.templating import inject_navigation, inject_default_stylesheet
 
 class Flask(Flask):
     def create_global_jinja_loader(self):
         template_path = os.path.join(self.config.get('SOURCE', ''),
                                      "_templates")
-        builtin_templates = os.path.join(self.root_path,
-                                         self.template_folder)
+        builtin_templates = os.path.join(self.root_path, self.template_folder)
         return FileSystemLoader([template_path, builtin_templates])
-        
-app = Flask("flaskrst")
-app.config.setdefault('STYLESHEETS', [])
-app.config.setdefault('FEEDS', [])
-app.jinja_env.globals['date'] = date
 
-def set_source(app, source_path=os.getcwd()):
-    app.config['SOURCE'] = source_path
-    source_static_folder = os.path.join(source_path, "_static")
-    if os.path.isdir(source_static_folder):
-        app.static_folder = source_static_folder
-    app.config.from_pyfile(os.path.join(app.config['SOURCE'], 'config.py'),
-                           silent=True)
+def create_app(source=None, config=None):    
+    app = Flask("flaskrst")
+    
+    # Set default config values
+    app.config.setdefault('STYLESHEETS', [])
+    app.config.setdefault('FEEDS', [])
+    
+    # Load config
+    if config:
+        app.config.from_pyfile(config)
+        config_loaded = True
+    # maybe there is a file declared by env
+    elif 'FLASK_RST_CONFIG' in os.environ:
+        app.config.from_envvar('FLASK_RST_CONFIG')
+        config_loaded = True
+    # no config loaded try again later after source setting
+    else:
+        config_loaded = False
+    
+    # Set source path
+    if source:
+        app.config['SOURCE'] = source
+    elif 'FLASK_RST_SOURCE' in os.environ:
+        app.config['SOURCE'] = os.environ['FLASK_RST_SOURCE']
+    else:
+        # Use current working directory as source
+        app.config['SOURCE'] = os.getcwd()
+    
+    # If no config already loaded than is a config maybe in source path
+    if not config_loaded:
+        config_path = os.path.join(app.config['SOURCE'], 'config.py')
+        app.config.from_pyfile(config_path, silent=True)
+    
+    # Set path of static folder
+    if 'STATIC_FOLDER' in app.config:
+        app.static_folder = app.config['STATIC_FOLDER']
+    else:
+        # Is a static folder called _static in source path?
+        source_static_folder = os.path.join(app.config['SOURCE'], "_static")
+        if os.path.isdir(source_static_folder):
+            app.static_folder = source_static_folder
+    
+    # Load flask-rst modules
     load_modules(app)
 
-set_source(app)
+    # Add some jinja globals and context processors
+    app.jinja_env.globals['date'] = date
+    app.context_processor(inject_navigation)
+    
+    # Inject the default stylesheet 'style.css' is there no other stylesheet 
+    # in app config
+    inject_default_stylesheet(app)
+    
+    @app.errorhandler(404)
+    def page_not_found(error):
+        return render_template('404.html'), 404
 
-@app.context_processor
-def inject_navigation():
-    navigation = []
-    for item in app.config.get('NAVIGATION', []):
-        if item.has_key('route') and item.has_key('label'):
-            kwargs = item.copy()
-            del kwargs['route']
-            del kwargs['label']
-        
-            link = url_for(item['route'], **kwargs)
-            navigation.append((link, item['label']))
-        elif item.has_key('url') and item.has_key('label'):
-            navigation.append((item['url'], item['label']))
+    print VERSION
 
-    return dict(navigation=navigation)
-
-@app.before_request
-def inject_stylesheet():
-    if len(app.config['STYLESHEETS']) == 0:
-        url = url_for('static', filename='style.css')
-        app.config['STYLESHEETS'].append(url)
-
-@app.errorhandler(404)
-def page_not_found(e):
-    return render_template('404.html'), 404
+    return app

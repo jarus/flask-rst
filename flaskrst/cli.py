@@ -11,11 +11,7 @@ import os
 import datetime
 
 from flaskext.script import Manager
-from flaskrst import app, set_source
-
-def create_app(source):
-    set_source(app, source)
-    return app
+from flaskrst import create_app
 
 manager = Manager(create_app)
 manager.add_option("-s", "--source", dest="source", required=False, \
