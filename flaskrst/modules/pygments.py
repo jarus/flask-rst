@@ -11,7 +11,8 @@ from __future__ import absolute_import
 from docutils import nodes
 from docutils.parsers.rst import directives, Directive
 
-from flask import Response, url_for
+from hashlib import sha1
+from flask import url_for, make_response, request, abort
 
 try:
     from pygments import highlight
@@ -44,9 +45,16 @@ def setup(app, cfg):
     directives.register_directive('sourcecode', Pygments)
     directives.register_directive('code-block', Pygments)
     
-    @app.route("/static/pygments.css")
+    @app.route(cfg.get('css_file_route', "/pygments.css"))
     def pygments_css():
-        return Response(formatter.get_style_defs(), mimetype="text/css")
+        etag = sha1(str(formatter.style)).hexdigest()
+        if request.headers.get('If-None-Match') == etag:
+            return "", 304
+        else:
+            res = make_response(formatter.get_style_defs())
+            res.mimetype = "text/css"
+            res.headers['ETag'] = etag
+            return res
     
     @app.before_request
     def inject_pygments_css():
