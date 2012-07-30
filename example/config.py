@@ -13,6 +13,10 @@ MODULES = {
         'style': 'tango'
     },
     'flaskrst.modules.github': {},
+    'flaskrst.modules.disqus': {
+        'active': False,
+        'shortname': 'example' # Change this to your disqus shortname
+    },
 }
 
 NAVIGATION = [
