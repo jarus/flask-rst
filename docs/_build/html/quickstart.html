@@ -1,0 +1,170 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Quickstart &mdash; flask-rst 0.2 documentation</title>
+    
+    <link rel="stylesheet" href="_static/flasky.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="flask-rst 0.2 documentation" href="index.html" />
+    <link rel="prev" title="Flask-RST" href="index.html" />
+   
+  
+  <link media="only screen and (max-device-width: 480px)" href="_static/small_flask.css" type= "text/css" rel="stylesheet" />
+
+  </head>
+  <body>
+  
+  
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Flask-RST"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">flask-rst 0.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="quickstart">
+<h1>Quickstart<a class="headerlink" href="#quickstart" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<p>The installation is thanks to the Python Package Index and pip really simple.:</p>
+<div class="highlight-python"><pre>$ pip install Flask-RST</pre>
+</div>
+<p>If you only can use easy_install than use:</p>
+<div class="highlight-python"><pre>$ easy_install Flask-RST</pre>
+</div>
+<p>It&#8217;s a good idea to install the package into a virtualenv to avoid version conflicts on dependencies.</p>
+</div>
+<div class="section" id="hello-world-in-flask-rst">
+<h2>Hello World in Flask-RST<a class="headerlink" href="#hello-world-in-flask-rst" title="Permalink to this headline">¶</a></h2>
+<p>To begin with we create a directory for our new website.:</p>
+<div class="highlight-python"><pre>$ mkdir hello-world/</pre>
+</div>
+<div class="section" id="config-file">
+<h3>Config file<a class="headerlink" href="#config-file" title="Permalink to this headline">¶</a></h3>
+<p>Flask-RST load from his source directory (in our case <tt class="docutils literal"><span class="pre">hello-world/</span></tt>) a config file called <tt class="docutils literal"><span class="pre">config.py</span></tt>. So create a config file with filename <tt class="docutils literal"><span class="pre">config.py</span></tt> and paste into this the following lines.:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">SITE_NAME</span> <span class="o">=</span> <span class="s">&quot;My Flask-RST website&quot;</span>
+<span class="n">AUTHOR_NAME</span> <span class="o">=</span> <span class="s">&quot;Me&quot;</span>
+
+<span class="n">MODULES</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">&#39;flaskrst.modules.page&#39;</span><span class="p">:</span> <span class="p">{},</span>
+<span class="p">}</span>
+
+<span class="n">STYLESHEETS</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s">&#39;/static/style.css&#39;</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>The keys <tt class="docutils literal"><span class="pre">SITE_NAME</span></tt> and <tt class="docutils literal"><span class="pre">AUTHOR_NAME</span></tt> sould be self-explanatory.</p>
+<p>The next key <tt class="docutils literal"><span class="pre">MODULES</span></tt> is interesting. It defines the modules which Flask-RST is loading. In our example there is only the <tt class="docutils literal"><span class="pre">flaskrst.modules.page</span></tt> module loaded and the empty Python dict says that there is no additional config keys for this module.</p>
+<p>The last key <tt class="docutils literal"><span class="pre">STYLESHEETS</span></tt> makes possible to set a list of css files which should be included.</p>
+</div>
+<div class="section" id="first-page">
+<h3>First page<a class="headerlink" href="#first-page" title="Permalink to this headline">¶</a></h3>
+<p>Now we should add our first page. Create a file called <tt class="docutils literal"><span class="pre">index.rst</span></tt> and put some restructuredText in it.:</p>
+<div class="highlight-python"><pre>Hello World
+===========
+
+This is my first page with Flask-RST.</pre>
+</div>
+</div>
+<div class="section" id="run-flask-rst">
+<h3>Run Flask-RST<a class="headerlink" href="#run-flask-rst" title="Permalink to this headline">¶</a></h3>
+<p>Let&#8217;s start Flask-RST with the <tt class="docutils literal"><span class="pre">flask-rst</span></tt> commandline tool.:</p>
+<div class="highlight-python"><pre>$ flask-rst runserver
+* Running on http://127.0.0.1:5000/
+* Restarting with reloader</pre>
+</div>
+<p>Now you can browse on <tt class="docutils literal"><span class="pre">http://127.0.0.1:5000/</span></tt> and you will get your first Flask-RST website.</p>
+<img alt="_images/quickstart_hello_world.png" src="_images/quickstart_hello_world.png" />
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Quickstart</a><ul>
+<li><a class="reference internal" href="#installation">Installation</a></li>
+<li><a class="reference internal" href="#hello-world-in-flask-rst">Hello World in Flask-RST</a><ul>
+<li><a class="reference internal" href="#config-file">Config file</a></li>
+<li><a class="reference internal" href="#first-page">First page</a></li>
+<li><a class="reference internal" href="#run-flask-rst">Run Flask-RST</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">Flask-RST</a></li>
+  </ul></li>
+</ul>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/quickstart.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+  <div class="footer">
+    &copy; Copyright 2012, Christoph Heer.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div>
+  
+  </body>
+</html>
