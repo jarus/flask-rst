@@ -11,11 +11,11 @@ from math import log
 
 from flask import Blueprint, render_template
 from jinja2 import Markup
-from flaskrst.modules.blog import get_posts
+from flaskrst.modules.blog import posts
 
 def get_tags():
     tags = {}
-    for post in get_posts():
+    for post in posts:
         post_tags = [tag.lower() for tag in post.config.get('tags', [])]
         for tag in post_tags:
             if tag not in tags:
@@ -25,13 +25,13 @@ def get_tags():
     return tags
 
 def get_posts_by_tag(name):
-    posts = []
-    for post in get_posts():
+    posts_with_tag = []
+    for post in posts:
         post_tags = [tag.lower() for tag in post.config.get('tags', [])]
         for tag in post_tags:
-            if tag == name and post not in posts:
-                posts.append(post)
-    return posts
+            if tag == name and post not in posts_with_tag:
+                posts_with_tag.append(post)
+    return posts_with_tag
 
 def template_tags(doc):
     tags = [tag.lower() for tag in doc.config.get('tags', [])]

@@ -10,7 +10,7 @@
 from flask import Blueprint, request, current_app, url_for, make_response
 from werkzeug.contrib.atom import AtomFeed, FeedEntry
 
-from flaskrst.modules.blog import get_posts
+from flaskrst.modules.blog import posts
 
 atom = Blueprint('atom', __name__)
 
@@ -19,7 +19,7 @@ def atom_feed():
     feed = AtomFeed(current_app.config.get('SITE_NAME', "My Site"), 
                     feed_url=request.url, url=request.host_url,
                     subtitle=current_app.config.get('SITE_SUBTITLE', None))
-    for post in get_posts():
+    for post in posts:
         entry = FeedEntry(post.title, 
                           url=post.external_url,
                           updated=post.pub_date, 

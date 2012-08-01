@@ -8,11 +8,11 @@
 """
 
 from flask import Blueprint, render_template, abort
-from flaskrst.modules.blog import get_posts
+from flaskrst.modules.blog import posts
 
 def get_archive():
     archive = {}
-    for post in get_posts():
+    for post in posts:
         if not archive.has_key(post.pub_date.year):
             archive[post.pub_date.year] = {}
         if not archive[post.pub_date.year].has_key(post.month):
