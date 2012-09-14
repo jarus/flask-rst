@@ -12,7 +12,7 @@ import datetime
 
 from flask import current_app
 
-from flaskext.script import Manager, prompt
+from flask.ext.script import Manager, prompt
 from flaskrst import create_app
 
 manager = Manager(create_app)
@@ -23,7 +23,7 @@ manager.add_option("-s", "--source", dest="source", required=False, \
 def build(build_destination=None):
     """Create a static version of the site with Frozen-Flask"""
     try:
-        from flaskext.frozen import Freezer
+        from flask.ext.frozen import Freezer
     except ImportError:
         import sys
         sys.exit("To create a static version of the site you need the "
