@@ -6,7 +6,10 @@
   <ul class="tagcloud">
   {%- for name, size in tags.items() %}
     <li>
-      <a href="{{ url_for('tags.tag', tag=name) }}" style="font-size: {{ size }}%">{{ name }}</a>
+      <a href="{{ url_for('tags.tag', tag=name) }}" style="font-size: {{ size }}%">{{ name }}</a> 
+      {% if config['MODULES']['flaskrst.modules.tags'].get('activate_atomfeeds_per_tag') -%}
+	<a href="{{ url_for('atom.atom_feed_tag', tag=name) }}"><img src="{{ url_for('static', filename='feed-icon16x16.png') }}" alt="{{ name }}"></a>
+      {% endif -%}
     </li>
   {%- endfor %}
   </ul>

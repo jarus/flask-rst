@@ -7,7 +7,9 @@ MODULES = {
         'body_as_summary_fallback': True
     },
     'flaskrst.modules.archive': {},
-    'flaskrst.modules.tags': {},
+    'flaskrst.modules.tags': {
+        'activate_atomfeeds_per_tag': True
+        },
     'flaskrst.modules.atom': {},
     'flaskrst.modules.pygments': {
         'style': 'tango'
